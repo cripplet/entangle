@@ -1,0 +1,3 @@
+[submodule "libs/spp"]
+	path = libs/spp
+	url = https://github.com/cripplet/spp.git
