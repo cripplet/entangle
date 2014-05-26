@@ -1,4 +1,3 @@
-#include<iostream>
 #include <ncurses.h>
 
 #include "controller.h"
@@ -16,17 +15,11 @@ void ControllerEngine::ignite() {
 
 void ControllerEngine::cycle() {
 	nodelay(stdscr, TRUE);
-	int a;
-	do {
-		a = getch();
-		if(a != ERR) {
-			// clear();
-			// printw("the key pressed is ");
-			attron(A_BOLD);
-			printw("%c", a);
-			attroff(A_BOLD);
-		}
-	} while(a != ERR);
+	int next_char = getch();
+	while(next_char != ERR) {
+		printw("%c", next_char);
+		next_char = getch();
+	}
 	Engine::cycle();
 }
 

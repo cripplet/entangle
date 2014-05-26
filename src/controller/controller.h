@@ -1,8 +1,5 @@
-#ifndef _ICONTROLLER_H
-#define _ICONTROLLER_H
-
-#include <mutex>
-#include <string>
+#ifndef _CONTROLLERENGINE_H
+#define _CONTROLLERENGINE_H
 
 #include "../../libs/spp/base/engine.h"
 
