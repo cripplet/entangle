@@ -8,14 +8,25 @@ ControllerEngine::~ControllerEngine() {}
 
 void ControllerEngine::ignite() {
 	initscr();
-	timeout(1);
-	// noecho();
+	cbreak();
+	noecho();
+	keypad(stdscr, TRUE);
 	Engine::ignite();
 }
 
 void ControllerEngine::cycle() {
-	getch();
-	refresh();
+	nodelay(stdscr, TRUE);
+	int a;
+	do {
+		a = getch();
+		if(a != ERR) {
+			// clear();
+			// printw("the key pressed is ");
+			attron(A_BOLD);
+			printw("%c", a);
+			attroff(A_BOLD);
+		}
+	} while(a != ERR);
 	Engine::cycle();
 }
 

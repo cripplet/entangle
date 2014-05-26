@@ -9,7 +9,7 @@
 
 int main(int argc, const char **argv) {
 	std::shared_ptr<ControllerEngine> controller (new ControllerEngine());
-	std::shared_ptr<Calendar> cal_controller (new Calendar(0, controller));
+	std::shared_ptr<Calendar> cal_controller (new Calendar(1, controller));
 	std::shared_ptr<SchedulingEngine> scheduler (new SchedulingEngine());
 	scheduler->add_calendar(cal_controller);
 
