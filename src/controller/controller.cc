@@ -14,11 +14,24 @@ void ControllerEngine::cycle() {
 	this->buffer = "";
 	int next_char = getch();
 	while(next_char != ERR) {
-		switch(next_char) {
-		}
 		// test for char here for special commands
-		// printw("%i", next_char);
-		this->buffer.push_back((char) next_char);
+		switch(next_char) {
+			case KEY_BACKSPACE:
+				next_char = 0x08;
+				break;
+			case KEY_DC:
+				next_char = 0x7F;
+				break;
+			/**
+			 * consider arrow keys & page_up / page_down here
+			 * call server->move()
+			 */
+			default:
+				break;
+		}
+		if(next_char < 0x80) {
+			this->buffer.push_back((char) next_char);
+		}
 		next_char = getch();
 	}
 	this->network_client_engine->set_buffer(this->buffer);

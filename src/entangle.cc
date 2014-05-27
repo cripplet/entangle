@@ -27,9 +27,9 @@ int main(int argc, const char **argv) {
 	scheduler->ignite();
 	scheduler->cycle();
 
-	sleep(10);
+	sleep(5);
 
 	scheduler->shutdown();
-	file.write();
+	file->write();
 	return(0);
 }
