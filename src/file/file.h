@@ -4,6 +4,7 @@
 #include <memory>
 #include <mutex>
 #include <string>
+#include <vector>
 
 /**
  * Abstraction for a line of text

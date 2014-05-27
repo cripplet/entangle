@@ -17,7 +17,9 @@ void GraphicsEngine::ignite() {
 
 void GraphicsEngine::cycle() {
 	clear();
-	printw("%s", this->buffer->get_buffer().c_str());
+	for(std::shared_ptr<Line> line = this->buffer; line != NULL; line = line->get_next()) {
+		printw("%s", line->get_buffer().c_str());
+	}
 }
 
 void GraphicsEngine::shutdown() {

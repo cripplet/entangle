@@ -3,12 +3,11 @@
 
 #include <memory>
 #include <string>
+#include <vector>
 
 #include "../../libs/spp/base/engine.h"
 
 #include "../graphics/graphics.h"
-
-class GraphicsEngine;
 
 class ClientEngine : public Engine {
 	public:
