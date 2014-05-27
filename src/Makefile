@@ -7,7 +7,7 @@ CFLAGS=-Wall -Werror -O3 -std=c++11
 LIBS=-lpthread -lncurses
 
 # remember to add all sources from subdirectories as well here
-SOURCES=*cc ../libs/spp/base/*cc ../libs/spp/scheduling/*cc controller/*cc
+SOURCES=*cc ../libs/spp/base/*cc ../libs/spp/scheduling/*cc controller/*cc graphics/*cc
 
 OBJECTS=$(SOURCES:.cc=.o)
 
