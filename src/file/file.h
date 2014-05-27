@@ -7,6 +7,9 @@
 
 /**
  * Abstraction for a line of text
+ *
+ * Inspiration from the GNU nano source code
+ *	cf. http://bit.ly/SI0z25
  */
 class Line {
 	public:
@@ -31,7 +34,29 @@ class Line {
 		std::shared_ptr<Line> prev;
 		std::shared_ptr<Line> next;
 
+		std::mutex line_lock;
 		std::mutex buffer_lock;
+};
+
+enum file_status { UNLOADED, LOADED };
+
+class File {
+	public:
+		File(std::string filename);
+		~File();
+
+		void set_line(const std::shared_ptr<Line>& line);
+
+		// load the filename and return a pointer to the nth line
+		const std::shared_ptr<Line>& read(int index);
+
+		// write the entirety of .line into the file
+		void write();
+
+	private:
+		int status;
+		std::string filename;
+		std::shared_ptr<Line> line;
 };
 
 #endif

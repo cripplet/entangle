@@ -13,10 +13,9 @@ int main(int argc, const char **argv) {
 	std::shared_ptr<SchedulingEngine> scheduler (new SchedulingEngine());
 
 	// file initialization
-	std::shared_ptr<Line> buffer (new Line(1, "", NULL, NULL));
+	std::shared_ptr<File> file (new File("example.txt"));
 
-
-	std::shared_ptr<GraphicsEngine> graphics_engine (new GraphicsEngine(buffer));
+	std::shared_ptr<GraphicsEngine> graphics_engine (new GraphicsEngine(file->read(0)));
 	std::shared_ptr<ControllerEngine> controller_engine (new ControllerEngine(graphics_engine));
 
 	std::shared_ptr<Calendar> cal_graphics (new Calendar(30, graphics_engine));
@@ -31,5 +30,6 @@ int main(int argc, const char **argv) {
 	sleep(10);
 
 	scheduler->shutdown();
+	file.write();
 	return(0);
 }
