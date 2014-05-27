@@ -23,7 +23,7 @@ class Line {
 		const std::shared_ptr<Line>& get_next();
 
 		void set_line(int line);
-		void set_buffer(std::string buffer);
+		std::vector<int> set_buffer(int start, std::string buffer);
 		void set_prev(const std::shared_ptr<Line>& prev);
 		void set_next(const std::shared_ptr<Line>& next);
 

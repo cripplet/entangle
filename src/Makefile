@@ -1,7 +1,7 @@
 CC=g++
 
 # yadda yadda yadda beware -O3 optimizations and threading
-CFLAGS=-Wall -Werror -O3 -std=c++11
+CFLAGS=-Wall -Werror -O3 -std=c++11 -g
 
 # std::thread relies on the pthread lib          
 LIBS=-lpthread -lncurses

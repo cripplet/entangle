@@ -7,10 +7,28 @@
 
 #include "../file/file.h"
 
+class PosInfo {
+	public:
+		PosInfo();
+		~PosInfo();
+
+		int get_x();
+		int get_y();
+
+		void set_x(int x);
+		void set_y(int y);
+
+	private:
+		int x;
+		int y;
+};
+
 class GraphicsEngine : public Engine {
 	public:
 		GraphicsEngine(const std::shared_ptr<Line>& buffer);
 		~GraphicsEngine();
+
+		const std::shared_ptr<PosInfo>& get_pos();
 
 		void ignite() override;
 		void cycle() override;
@@ -19,6 +37,7 @@ class GraphicsEngine : public Engine {
 		const std::shared_ptr<Line>& get_buffer();
 	private:
 		std::shared_ptr<Line> buffer;		// render onto the screen
+		std::shared_ptr<PosInfo> pos;
 };
 
 #endif

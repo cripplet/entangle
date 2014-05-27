@@ -31,7 +31,7 @@ int main(int argc, const char **argv) {
 	scheduler->ignite();
 	scheduler->cycle();
 
-	sleep(5);
+	sleep(10);
 
 	scheduler->shutdown();
 	file->write();

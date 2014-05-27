@@ -1,4 +1,5 @@
 #include <fstream>
+#include <ncurses.h>
 
 #include "file.h"
 
@@ -20,11 +21,52 @@ void Line::set_line(int line) {
 	this->line = line;
 	this->line_lock.unlock();
 }
-void Line::set_buffer(std::string buffer) {
-	this->buffer_lock.lock();
-	this->buffer.append(buffer);
-	this->buffer_lock.unlock();
+std::vector<int> Line::set_buffer(int start, std::string buffer) {
+	std::vector<int> delta = { 0, 0 };
+	// this->buffer_lock.lock();
+
+	start = (std::size_t) start > this->buffer.size() ? this->buffer.size() : start;
+	this->buffer.insert(start, buffer);
+
+	std::string::iterator i = this->buffer.begin();
+	while(i < this->buffer.end()) {
+		char ch = *i;
+		// std::size_t index = std::distance(this->buffer.begin(), i);
+		switch(ch) {
+			case 0x08:
+				delta.at(0)--;
+				break;
+			case 0x7F:
+				this->buffer.erase(i++);
+				if(i != this->buffer.end()) {
+					this->buffer.erase(i++);
+				} else if(this->next != NULL) {
+					this->buffer.append(this->next->get_buffer());
+					this->next = this->next->next;
+				}
+				break;
+//			case 0x0A:
+				// delta.at(1)++;
+				/**
+				{
+					std::shared_ptr<Line> _this (this);
+					std::shared_ptr<Line> line (new Line(this->line + 1, this->buffer.substr(index), _this, this->next));
+					if(this->next != NULL) { this->next->set_prev(line); }
+					this->next = line;
+					this->buffer.erase(index);
+				}
+				*/
+//				break;
+			default:
+				delta.at(0)++;
+				break;
+		}
+		++i;
+	}
+	// this->buffer_lock.unlock();
+	return(delta);
 }
+
 void Line::set_prev(const std::shared_ptr<Line>& prev) {
 	this->prev = prev;
 }

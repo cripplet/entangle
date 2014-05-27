@@ -22,6 +22,9 @@ void ControllerEngine::cycle() {
 			case KEY_DC:
 				next_char = 0x7F;
 				break;
+			// manually convert CR to LF
+			case 0x0D:
+				next_char = 0x0A;
 			/**
 			 * consider arrow keys & page_up / page_down here
 			 * call server->move()
