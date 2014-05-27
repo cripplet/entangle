@@ -5,9 +5,11 @@
 
 #include "../../libs/spp/base/engine.h"
 
+#include "../file/file.h"
+
 class GraphicsEngine : public Engine {
 	public:
-		GraphicsEngine();
+		GraphicsEngine(const std::shared_ptr<Line>& buffer);
 		~GraphicsEngine();
 
 		void ignite() override;
@@ -17,8 +19,7 @@ class GraphicsEngine : public Engine {
 		void set_buffer(std::string buffer);
 
 	private:
-		std::string buffer;			// render onto the screen
-		std::mutex buffer_lock;			// lock the buffer when reading and writing
+		std::shared_ptr<Line> buffer;		// render onto the screen
 };
 
 #endif

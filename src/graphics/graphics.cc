@@ -2,14 +2,12 @@
 
 #include "graphics.h"
 
-GraphicsEngine::GraphicsEngine() : Engine() {}
+GraphicsEngine::GraphicsEngine(const std::shared_ptr<Line>& buffer) : Engine(), buffer(buffer) {}
 GraphicsEngine::~GraphicsEngine() {}
 
 void GraphicsEngine::set_buffer(std::string buffer) {
-	this->buffer_lock.lock();
-	this->buffer.append(buffer);
-	this->buffer_lock.unlock();
- }
+	this->buffer->set_buffer(buffer);
+}
 
 void GraphicsEngine::ignite() {
 	initscr();
@@ -20,10 +18,8 @@ void GraphicsEngine::ignite() {
 }
 
 void GraphicsEngine::cycle() {
-	// clear();
-	this->buffer_lock.lock();
-	// printw("%s", this->buffer.c_str());
-	this->buffer_lock.unlock();
+	clear();
+	printw("%s", this->buffer->get_buffer().c_str());
 }
 
 void GraphicsEngine::shutdown() {
