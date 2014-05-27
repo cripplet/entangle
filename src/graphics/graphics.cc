@@ -5,9 +5,7 @@
 GraphicsEngine::GraphicsEngine(const std::shared_ptr<Line>& buffer) : Engine(), buffer(buffer) {}
 GraphicsEngine::~GraphicsEngine() {}
 
-void GraphicsEngine::set_buffer(std::string buffer) {
-	this->buffer->set_buffer(buffer);
-}
+const std::shared_ptr<Line>& GraphicsEngine::get_buffer() { return(this->buffer); }
 
 void GraphicsEngine::ignite() {
 	initscr();

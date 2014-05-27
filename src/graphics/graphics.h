@@ -16,8 +16,7 @@ class GraphicsEngine : public Engine {
 		void cycle() override;
 		void shutdown() override;
 
-		void set_buffer(std::string buffer);
-
+		const std::shared_ptr<Line>& get_buffer();
 	private:
 		std::shared_ptr<Line> buffer;		// render onto the screen
 };

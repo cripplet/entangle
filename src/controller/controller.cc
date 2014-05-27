@@ -2,7 +2,7 @@
 
 #include "controller.h"
 
-ControllerEngine::ControllerEngine(const std::shared_ptr<GraphicsEngine>& network_client_engine) : Engine(), network_client_engine(network_client_engine) {}
+ControllerEngine::ControllerEngine(const std::shared_ptr<ClientEngine>& client_engine) : Engine(), client_engine(client_engine) {}
 ControllerEngine::~ControllerEngine() {}
 
 void ControllerEngine::ignite() {
@@ -34,7 +34,7 @@ void ControllerEngine::cycle() {
 		}
 		next_char = getch();
 	}
-	this->network_client_engine->set_buffer(this->buffer);
+	this->client_engine->set_buffer(this->buffer);
 	Engine::cycle();
 }
 

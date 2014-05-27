@@ -5,11 +5,11 @@
 #include <string>
 
 #include "../../libs/spp/base/engine.h"
-#include "../graphics/graphics.h"
+#include "../network/client.h"
 
 class ControllerEngine : public Engine {
 	public:
-		ControllerEngine(const std::shared_ptr<GraphicsEngine>& network_client_engine);
+		ControllerEngine(const std::shared_ptr<ClientEngine>& client_engine);
 		~ControllerEngine();
 
 		void ignite() override;
@@ -17,8 +17,7 @@ class ControllerEngine : public Engine {
 		void shutdown() override;
 
 	private:
-		// TODO -- interface with the CLIENT instead
-		std::shared_ptr<GraphicsEngine> network_client_engine;
+		std::shared_ptr<ClientEngine> client_engine;
 
 		std::string buffer;
 };
