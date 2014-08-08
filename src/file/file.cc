@@ -23,7 +23,19 @@ void Line::set_line(int line) {
 }
 std::vector<int> Line::set_buffer(int start, std::string buffer) {
 	std::vector<int> delta = { 0, 0 };
-	// this->buffer_lock.lock();
+	this->buffer_lock.lock();
+
+	/**
+	 * parse the buffer
+	 */
+	for(std::string::iterator i = buffer.begin(); i < buffer.end(); i++) {
+		/*
+		char ch = *i;
+		switch(ch) {
+			case 0x08:
+				delta.at(0)--;
+		*/
+	}
 
 	start = (std::size_t) start > this->buffer.size() ? this->buffer.size() : start;
 	this->buffer.insert(start, buffer);
@@ -35,8 +47,13 @@ std::vector<int> Line::set_buffer(int start, std::string buffer) {
 		switch(ch) {
 			case 0x08:
 				delta.at(0)--;
+				/*
+				this->buffer.erase(i);
+				this->buffer.erase(i++);
+				*/
 				break;
 			case 0x7F:
+				/*
 				this->buffer.erase(i++);
 				if(i != this->buffer.end()) {
 					this->buffer.erase(i++);
@@ -44,9 +61,10 @@ std::vector<int> Line::set_buffer(int start, std::string buffer) {
 					this->buffer.append(this->next->get_buffer());
 					this->next = this->next->next;
 				}
+				*/
 				break;
-//			case 0x0A:
-				// delta.at(1)++;
+			case 0x0A:
+				delta.at(1)++;
 				/**
 				{
 					std::shared_ptr<Line> _this (this);
@@ -56,14 +74,14 @@ std::vector<int> Line::set_buffer(int start, std::string buffer) {
 					this->buffer.erase(index);
 				}
 				*/
-//				break;
+				break;
 			default:
 				delta.at(0)++;
 				break;
 		}
 		++i;
 	}
-	// this->buffer_lock.unlock();
+	this->buffer_lock.unlock();
 	return(delta);
 }
 

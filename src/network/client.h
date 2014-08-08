@@ -14,7 +14,8 @@ class ClientEngine : public Engine {
 		ClientEngine(const std::shared_ptr<GraphicsEngine>& graphics_engine);
 		~ClientEngine();
 
-		void set_buffer(std::string buffer);
+		void send_move(std::vector<int> delta);
+		void send_buffer(std::string buffer);
 
 	private:
 		std::shared_ptr<GraphicsEngine> graphics_engine;

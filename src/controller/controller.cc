@@ -12,8 +12,7 @@ void ControllerEngine::ignite() {
 void ControllerEngine::cycle() {
 	nodelay(stdscr, TRUE);
 	this->buffer = "";
-	int next_char = getch();
-	while(next_char != ERR) {
+	for(int next_char = getch(); next_char != ERR; next_char = getch()) {
 		// test for char here for special commands
 		switch(next_char) {
 			case KEY_BACKSPACE:
@@ -25,19 +24,35 @@ void ControllerEngine::cycle() {
 			// manually convert CR to LF
 			case 0x0D:
 				next_char = 0x0A;
-			/**
-			 * consider arrow keys & page_up / page_down here
-			 * call server->move()
-			 */
+				break;
+			case KEY_RIGHT:
+				this->client_engine->send_buffer(this->buffer);
+				this->buffer = "";
+				this->client_engine->send_move({ 0, 1 });
+				break;
+			case KEY_LEFT:
+				this->client_engine->send_buffer(this->buffer);
+				this->buffer = "";
+				this->client_engine->send_move({ 0, -1 });
+				break;
+			case KEY_UP:
+				this->client_engine->send_buffer(this->buffer);
+				this->buffer = "";
+				this->client_engine->send_move({ -1, 0 });
+				break;
+			case KEY_DOWN:
+				// this->client_engine->send_buffer(this->buffer);
+				// this->buffer = "";
+				this->client_engine->send_move({ 1, 0 });
+				break;
 			default:
 				break;
 		}
 		if(next_char < 0x80) {
 			this->buffer.push_back((char) next_char);
 		}
-		next_char = getch();
 	}
-	this->client_engine->set_buffer(this->buffer);
+	this->client_engine->send_buffer(this->buffer);
 	Engine::cycle();
 }
 

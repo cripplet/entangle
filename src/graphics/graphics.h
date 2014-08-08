@@ -21,6 +21,8 @@ class PosInfo {
 	private:
 		int x;
 		int y;
+
+		std::mutex pos_lock;
 };
 
 class GraphicsEngine : public Engine {
