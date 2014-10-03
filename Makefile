@@ -6,7 +6,7 @@ INCLUDE=-Iinclude/ -Iinclude/libs/
 # include statements necessary to link all the individual libraries
 INCLUDE_LIBS=-Iexternal/entangle-server/include/ -Iexternal/entangle-server/external/giga/external/catch/include/ -Iexternal/entangle-server/external/exceptionpp/include/ -Iexternal/entangle-server/external/msgpp/include/ -Iexternal/entangle-server/external/giga/include/libs/stacktrace/ -Iexternal/entangle-server/external/giga/external/cachepp/include/ -Iexternal/entangle-server/external/giga/include/ -Iexternal/entangle-server/external/msgpp/include/
 
-LIBS=-pthread
+LIBS=-pthread -lncurses
 
 S_SOURCES+=src/*cc libs/*/*cc
 S_OBJECTS=$(S_SOURCES:.cc=.o)

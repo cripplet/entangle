@@ -20,7 +20,8 @@ namespace entangle {
 
 			~EntangleClient();
 
-			void start();
+			void up();
+			void dn();
 
 			virtual void i(size_t pos, char c);
 			virtual void e(size_t pos);
@@ -34,6 +35,7 @@ namespace entangle {
 			OTNode<EntangleClient> node;
 
 			bool is_blank;
+			bool is_up;
 			std::vector<std::string> log;
 	};
 }

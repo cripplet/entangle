@@ -1,13 +1,17 @@
 #include <cstdlib>
 #include <ctime>
+#include <ncurses.h>
 #include <sstream>
 #include <vector>
+
+#include <iostream>
 
 #include "src/entangle_client.h"
 
 entangle::EntangleClient::EntangleClient() {
 	srand(time(NULL));
 	this->is_blank = true;
+	this->is_up = false;
 }
 
 entangle::EntangleClient::EntangleClient(std::string filename) : entangle::EntangleClient::EntangleClient() {
@@ -50,8 +54,20 @@ entangle::EntangleClient::~EntangleClient() {
 	}
 }
 
-void entangle::EntangleClient::start() {
-	this->node.set_hook(this->shared_from_this());
+void entangle::EntangleClient::up() {
+	if(!this->is_blank) {
+		this->node.set_hook(this->shared_from_this());
+		this->is_up = true;
+		initscr();
+		getch();
+	}
+}
+
+void entangle::EntangleClient::dn() {
+	if(!this->is_blank) {
+		endwin();
+		this->is_up = false;
+	}
 }
 
 void entangle::EntangleClient::enq(std::string l) {

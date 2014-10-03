@@ -32,7 +32,8 @@ int main(int argc, char** argv) {
 			client = std::shared_ptr<entangle::EntangleClient> (new entangle::EntangleClient(_fn));
 		}
 
-		client->start();
+		client->up();
+		client->dn();
 
 		// delete this later
 		auto l = client->get_log();
