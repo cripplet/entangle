@@ -1,5 +1,8 @@
 #ifndef _ENTANGLE_NO_MAIN
 
+#define VERSION "0.0.1"
+#define SOURCE "https://github.com/cripplet/entangle"
+
 #include <iostream>
 #include <sstream>
 
@@ -10,7 +13,9 @@
 int main(int argc, char** argv) {
         entangle::EntangleClient client;
 	try {
-		TCLAP::CmdLine parser("Entangle is a concurrent file editor. Contact information and source code can be found in the repository at https://github.com/cripplet/entangle.", ' ', "0.0.1");
+		std::stringstream buf;
+		buf << "Entangle is a concurrent file editor. Contact information and source code can be found in the repository at " << SOURCE << ".";
+		TCLAP::CmdLine parser(buf.str(), ' ', VERSION);
 		TCLAP::ValueArg<std::string> fn("", "filename", "file to edit", false, "", "string");
 		TCLAP::ValueArg<std::string> hn("", "hostname", "host of the file", false, "", "string");
 		TCLAP::ValueArg<size_t> p("", "port", "port of the hostname", false, 0, "size_t");
