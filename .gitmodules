@@ -1,3 +1,6 @@
 [submodule "external/entangle-server"]
 	path = external/entangle-server
 	url = https://github.com/cripplet/entangle-server.git
+[submodule "external/tclap"]
+	path = external/tclap
+	url = https://github.com/BlueBrain/tclap.git
