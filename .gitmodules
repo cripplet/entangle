@@ -1,3 +1,3 @@
-[submodule "libs/spp"]
-	path = libs/spp
-	url = https://github.com/cripplet/spp.git
+[submodule "external/entangle-server"]
+	path = external/entangle-server
+	url = https://github.com/cripplet/entangle-server.git
