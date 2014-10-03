@@ -4,6 +4,7 @@
 #define SOURCE "https://github.com/cripplet/entangle"
 
 #include <iostream>
+#include <memory>
 #include <sstream>
 
 #include "libs/tclap/CmdLine.h"
@@ -11,7 +12,7 @@
 #include "src/entangle_client.h"
 
 int main(int argc, char** argv) {
-        entangle::EntangleClient client;
+	std::shared_ptr<entangle::EntangleClient> client;
 	try {
 		std::stringstream buf;
 		buf << "Entangle is a concurrent file editor. Contact information and source code can be found in the repository at " << SOURCE << ".";
@@ -26,17 +27,18 @@ int main(int argc, char** argv) {
 		std::string _hn = hn.getValue();
 		size_t _p = p.getValue();
 		if(_fn.compare("") == 0) {
-			client = entangle::EntangleClient(_hn, _p);
+			client = std::shared_ptr<entangle::EntangleClient> (new entangle::EntangleClient(_hn, _p));
 		} else {
-			client = entangle::EntangleClient(_fn);
+			client = std::shared_ptr<entangle::EntangleClient> (new entangle::EntangleClient(_fn));
 		}
 
+		client->start();
+
 		// delete this later
-		auto l = client.get_log();
+		auto l = client->get_log();
 		for(auto i = l.begin(); i != l.end(); ++i) {
 			std::cout << *i << std::endl;
 		}
-
 	} catch(TCLAP::ArgException &e) {
 		std::cerr << "error: " << e.error() << " for arg " << e.argId() << std::endl;
 	}

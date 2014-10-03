@@ -20,6 +20,8 @@ namespace entangle {
 
 			~EntangleClient();
 
+			void start();
+
 			virtual void i(size_t pos, char c);
 			virtual void e(size_t pos);
 
