@@ -7,6 +7,8 @@
 namespace entangle {
 	class EntangleClient : public OTVoidHook {
 		public:
+			EntangleClient();
+
 			// local invocation
 			EntangleClient(std::string filename);
 
@@ -18,9 +20,11 @@ namespace entangle {
 			virtual void i(size_t pos, char c);
 			virtual void e(size_t pos);
 
+			size_t get_port();
+
 		private:
 			OTNode<EntangleClient> node;
-
+			bool is_blank;
 	};
 }
 
