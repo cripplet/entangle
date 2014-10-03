@@ -1,6 +1,8 @@
 #ifndef _ENTANGLE_CLIENT_H
 #define _ENTANGLE_CLIENT_H
 
+#include <vector>
+
 #include "libs/entangle-server/dopt_void_hook.h"
 #include "libs/entangle-server/dopt_node.h"
 
@@ -22,9 +24,14 @@ namespace entangle {
 
 			size_t get_port();
 
+			std::vector<std::string> get_log();
+			void enq(std::string l);
+
 		private:
 			OTNode<EntangleClient> node;
+
 			bool is_blank;
+			std::vector<std::string> log;
 	};
 }
 
