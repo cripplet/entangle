@@ -15,6 +15,7 @@ entangle::EntangleClient::EntangleClient(std::string filename) : entangle::Entan
 	this->node.up();
 	this->node.bind(filename);
 	this->is_blank = false;
+	this->node.set_hook(this->shared_from_this());
 	{
 		std::stringstream buf;
 		buf << "starting entangle server on " << this->get_port();
@@ -32,6 +33,7 @@ entangle::EntangleClient::EntangleClient(std::string hostname, size_t port) : en
 	this->node.up();
 	this->node.join(hostname, port);
 	this->is_blank = false;
+	this->node.set_hook(this->shared_from_this());
 	{
 		std::stringstream buf;
 		buf << "starting entangle server on " << this->get_port();

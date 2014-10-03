@@ -1,13 +1,14 @@
 #ifndef _ENTANGLE_CLIENT_H
 #define _ENTANGLE_CLIENT_H
 
+#include <memory>
 #include <vector>
 
 #include "libs/entangle-server/dopt_void_hook.h"
 #include "libs/entangle-server/dopt_node.h"
 
 namespace entangle {
-	class EntangleClient : public OTVoidHook {
+	class EntangleClient : public OTVoidHook, public std::enable_shared_from_this<EntangleClient> {
 		public:
 			EntangleClient();
 
