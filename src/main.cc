@@ -3,6 +3,7 @@
 #define VERSION "0.0.1"
 #define SOURCE "https://github.com/cripplet/entangle"
 
+#include <chrono>
 #include <iostream>
 #include <memory>
 #include <sstream>
@@ -13,6 +14,7 @@
 
 int main(int argc, char** argv) {
 	std::shared_ptr<entangle::EntangleClient> client;
+	// process args
 	try {
 		std::stringstream buf;
 		buf << "Entangle is a concurrent file editor. Contact information and source code can be found in the repository at " << SOURCE << ".";
@@ -33,13 +35,14 @@ int main(int argc, char** argv) {
 		}
 
 		client->up();
+		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 		client->dn();
 
 		// delete this later
-		auto l = client->get_log();
-		for(auto i = l.begin(); i != l.end(); ++i) {
-			std::cout << *i << std::endl;
-		}
+		// auto l = client->get_log();
+		// for(auto i = l.begin(); i != l.end(); ++i) {
+		//	std::cout << *i << std::endl;
+		// }
 	} catch(TCLAP::ArgException &e) {
 		std::cerr << "error: " << e.error() << " for arg " << e.argId() << std::endl;
 	}

@@ -1,7 +1,9 @@
 #ifndef _ENTANGLE_CLIENT_H
 #define _ENTANGLE_CLIENT_H
 
+#include <atomic>
 #include <memory>
+#include <thread>
 #include <vector>
 
 #include "libs/entangle-server/dopt_void_hook.h"
@@ -35,8 +37,12 @@ namespace entangle {
 			OTNode<EntangleClient> node;
 
 			bool is_blank;
-			bool is_up;
 			std::vector<std::string> log;
+
+			void process();
+
+			std::thread t_process;
+			std::shared_ptr<std::atomic<bool>> flag;
 	};
 }
 

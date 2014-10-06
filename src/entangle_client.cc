@@ -1,17 +1,15 @@
+#include <chrono>
 #include <cstdlib>
 #include <ctime>
 #include <ncurses.h>
 #include <sstream>
 #include <vector>
 
-#include <iostream>
-
 #include "src/entangle_client.h"
 
 entangle::EntangleClient::EntangleClient() {
 	srand(time(NULL));
 	this->is_blank = true;
-	this->is_up = false;
 }
 
 entangle::EntangleClient::EntangleClient(std::string filename) : entangle::EntangleClient::EntangleClient() {
@@ -29,6 +27,7 @@ entangle::EntangleClient::EntangleClient(std::string filename) : entangle::Entan
 		buf << "editing local file " << filename;
 		this->enq(buf.str());
 	}
+	this->flag = std::shared_ptr<std::atomic<bool>> (new std::atomic<bool> (0));
 }
 
 entangle::EntangleClient::EntangleClient(std::string hostname, size_t port) : entangle::EntangleClient::EntangleClient() {
@@ -57,17 +56,26 @@ entangle::EntangleClient::~EntangleClient() {
 void entangle::EntangleClient::up() {
 	if(!this->is_blank) {
 		this->node.set_hook(this->shared_from_this());
-		this->is_up = true;
-		initscr();
-		getch();
+		this->t_process = std::thread(&entangle::EntangleClient::process, this);
 	}
 }
 
 void entangle::EntangleClient::dn() {
 	if(!this->is_blank) {
-		endwin();
-		this->is_up = false;
+		*(this->flag) = false;
+		this->t_process.join();
 	}
+}
+
+void entangle::EntangleClient::process() {
+	*(this->flag) = true;
+	initscr();
+	touchwin(stdscr);
+	getch();
+	while(*(this->flag)) {
+		std::this_thread::sleep_for(std::chrono::milliseconds(10));
+	}
+	endwin();
 }
 
 void entangle::EntangleClient::enq(std::string l) {
@@ -81,9 +89,8 @@ void entangle::EntangleClient::enq(std::string l) {
 	buf << t_buf << l;
 	this->log.push_back(buf.str());
 }
+
 std::vector<std::string> entangle::EntangleClient::get_log() { return(this->log); }
-
 size_t entangle::EntangleClient::get_port() { return(this->node.get_port()); }
-
 void entangle::EntangleClient::i(size_t pos, char c) {}
 void entangle::EntangleClient::e(size_t pos) {}
