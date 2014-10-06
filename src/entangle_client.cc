@@ -61,7 +61,7 @@ void entangle::EntangleClient::up() {
 }
 
 void entangle::EntangleClient::dn() {
-	if(!this->is_blank) {
+	if(*(this->flag) && !this->is_blank) {
 		*(this->flag) = false;
 		this->t_process.join();
 	}
