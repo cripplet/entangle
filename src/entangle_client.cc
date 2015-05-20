@@ -87,7 +87,10 @@ void entangle::EntangleClient::enq(std::string l) {
 
 	std::stringstream buf;
 	buf << t_buf << l;
-	this->log.push_back(buf.str());
+	{
+		std::lock_guard<std::recursive_mutex> l(*(this->l_lock));
+		this->log.push_back(buf.str());
+	}
 }
 
 std::vector<std::string> entangle::EntangleClient::get_log() { return(this->log); }

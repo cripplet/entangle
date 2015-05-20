@@ -3,6 +3,7 @@
 
 #include <atomic>
 #include <memory>
+#include <mutex>
 #include <thread>
 #include <vector>
 
@@ -43,6 +44,7 @@ namespace entangle {
 
 			std::thread t_process;
 			std::shared_ptr<std::atomic<bool>> flag;
+			std::shared_ptr<std::recursive_mutex> log_lock;
 	};
 }
 
